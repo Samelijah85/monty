@@ -2,25 +2,29 @@
 
 /**
  * create_inst - Creates a new instruction_t
-*/
+ */
 void create_inst(void)
 {
 	info->instr = malloc(sizeof(instruction_t));
 	if (info->instr == NULL)
 	{
-		malloc_error();
+		fprintf(stderr, "Failed to allocate memory for instruction_t\n");
+		free_all();
+		exit(EXIT_FAILURE);
 	}
 }
 
 /**
  * create_info - Creates a new info_t
-*/
+ */
 void create_info(void)
 {
 	info = malloc(sizeof(info_t));
 	if (info == NULL)
 	{
-		malloc_error();
+		fprintf(stderr, "Failed to allocate memory for info_t\n");
+		free_all();
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -44,13 +48,15 @@ void initialize_info(void)
 
 /**
  * create_stack - Create a new stack
-*/
+ */
 void create_stack(void)
 {
 	info->stack = malloc(sizeof(stack_t));
 	if (info->stack == NULL)
 	{
-		malloc_error();
+		fprintf(stderr, "Failed to allocate memory for stack_t.\n");
+		free_all();
+		exit(EXIT_FAILURE);
 	}
 	info->stack->next = NULL;
 	info->stack->prev = NULL;
@@ -58,12 +64,14 @@ void create_stack(void)
 
 /**
  * alloc_tokens - Allocates memory to the tokens (args)
-*/
+ */
 void alloc_tokens(void)
 {
 	info->tokens = malloc(sizeof(char *) * (info->token_number + 1));
 	if (info->tokens == NULL)
 	{
-		malloc_error();
+		fprintf(stderr, "Failed to allocate memory for tokens.\n");
+		free_all();
+		exit(EXIT_FAILURE);
 	}
 }
