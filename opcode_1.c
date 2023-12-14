@@ -8,16 +8,16 @@
  */
 void pall(stack_t **stack, unsigned int line_number)
 {
-	stack_t *h;
+	stack_t *temp;
 	(void)line_number;
 
-	h = *stack;
-	if (h == NULL)
+	temp = *stack;
+	if (temp == NULL)
 		return;
-	while (h)
+	while (temp)
 	{
-		printf("%d\n", h->n);
-		h = h->next;
+		printf("%d\n", temp->n);
+		temp = temp->next;
 	}
 }
 
@@ -53,4 +53,47 @@ void push(stack_t **stack, unsigned int line_number)
 		add_to_stack(stack, n);
 	else
 		add_to_queue(stack, n);
+}
+
+/**
+ * pint - Prints the value at the top of the stack, followed by a new line
+ * @stack: Pointer to the pointer to the head of the list
+ * @line_number: The line number
+ */
+void pint(stack_t **stack, unsigned int line_number)
+{
+	if (*stack == NULL)
+	{
+		pint_error(stack, line_number);
+	}
+	printf("%d\n", (*stack)->n);
+}
+
+/**
+ * nop - Doesn’t do anything
+ * @stack: Pointer to the pointer to the head of the list
+ * @line_number: The line number
+ */
+void nop(stack_t **stack, unsigned int line_number)
+{
+	(void) line_number;
+	(void) stack;
+}
+
+/**
+ * pop - Removes the top element of the stack
+ * @stack: Pointer to the pointer to the head of the list
+ * @line_number: The line number
+ */
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+
+	if (*stack == NULL)
+	{
+		pop_error(stack, line_number);
+	}
+	temp = *stack;
+	*stack = temp->next;
+	free(temp);
 }
