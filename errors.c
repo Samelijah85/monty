@@ -1,53 +1,30 @@
 #include "monty.h"
 
 /**
- * malloc_error - prints error when malloc fails
+ * push_error - Handles push errors
+ * @stack: Pointer to the pointer to the head of the list
+ * @line_number: The line number
  */
-void malloc_error(void)
+void push_error(stack_t **stack, unsigned int line_number)
 {
-	fprintf(stderr, "Error: malloc failed\n");
-	free_all();
+	fprintf(stderr, "L%d: usage: push integer\n", line_number);
+	fclose(info.file);
+	free(info.line);
+	free_stack(*stack);
 	exit(EXIT_FAILURE);
 }
 
 /**
- * usage_error - prints proper usage of the program
+ * opcode_error - Handles opcode errors
+ * @stack: Pointer to the pointer to the head of the list
+ * @counter: The line number
+ * @op: The opcode
  */
-void usage_error(void)
+void opcode_error(stack_t **stack, unsigned int counter, char *op)
 {
-	fprintf(stderr, "USAGE: monty file\n");
-	exit(EXIT_FAILURE);
-}
-
-/**
- * open_file_error - prints error when file fail to open
- */
-void open_file_error(void)
-{
-	fprintf(stderr, "Error: Can't open file %s\n", info->filename);
-	free_all();
-	exit(EXIT_FAILURE);
-}
-
-/**
- * invalid_instruction_error - prints error if the program encounters
- * an invalid instruction
- * @opcode: the opcode (instruction)
- */
-void invalid_instruction_error(char *opcode)
-{
-	fprintf(stderr, "L%u: unknown instruction %s\n", info->line_number, opcode);
-	free_all();
-	exit(EXIT_FAILURE);
-}
-
-/**
- * out_of_range_error - prints error when value is not in
- * the ascii table
-*/
-void out_of_range_error(void)
-{
-	fprintf(stderr, "L%u: can't pchar, value out of range\n", info->line_number);
-	free_all();
+	fprintf(stderr, "L%d: unknown instruction %s\n", counter, op);
+	fclose(info.file);
+	free(info.line);
+	free_stack(*stack);
 	exit(EXIT_FAILURE);
 }
