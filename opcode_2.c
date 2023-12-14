@@ -84,18 +84,28 @@ void sub(stack_t **stack, unsigned int line_number)
  */
 void _div(stack_t **stack, unsigned int line_number)
 {
-	if (!(*stack) || !(*stack)->next)
+	stack_t *temp;
+	int len = 0, quotient;
+
+	temp = *stack;
+	while (temp)
+	{
+		temp = temp->next;
+		len++;
+	}
+	if (len < 2)
 	{
 		div_error(stack, line_number);
 	}
-
-	if ((*stack)->n == 0)
+	temp = *stack;
+	if (temp->n == 0)
 	{
 		div_by_zero_error(stack, line_number);
 	}
-
-	(*stack)->next->n = (*stack)->next->n / (*stack)->n;
-	pop(stack, line_number);
+	quotient = temp->next->n / temp->n;
+	temp->next->n = quotient;
+	*stack = temp->next;
+	free(temp);
 }
 
 /**
@@ -105,11 +115,22 @@ void _div(stack_t **stack, unsigned int line_number)
  */
 void mul(stack_t **stack, unsigned int line_number)
 {
-	if (!(*stack) || !(*stack)->next)
+	stack_t *temp;
+	int len = 0, product;
+
+	temp = *stack;
+	while (temp)
+	{
+		temp = temp->next;
+		len++;
+	}
+	if (len < 2)
 	{
 		mul_error(stack, line_number);
 	}
-
-	(*stack)->next->n = (*stack)->next->n * (*stack)->n;
-	pop(stack, line_number);
+	temp = *stack;
+	product = temp->next->n * temp->n;
+	temp->next->n = product;
+	*stack = temp->next;
+	free(temp);
 }

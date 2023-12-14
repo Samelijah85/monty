@@ -8,18 +8,28 @@
  */
 void mod(stack_t **stack, unsigned int line_number)
 {
-	if (!(*stack) || !(*stack)->next)
+	stack_t *temp;
+	int len = 0, remainder;
+
+	temp = *stack;
+	while (temp)
+	{
+		temp = temp->next;
+		len++;
+	}
+	if (len < 2)
 	{
 		mod_error(stack, line_number);
 	}
-
-	if ((*stack)->n == 0)
+	temp = *stack;
+	if (temp->n == 0)
 	{
 		div_by_zero_error(stack, line_number);
 	}
-
-	(*stack)->next->n = (*stack)->next->n % (*stack)->n;
-	pop(stack, line_number);
+	remainder = temp->next->n % temp->n;
+	temp->next->n = remainder;
+	*stack = temp->next;
+	free(temp);
 }
 
 /**
@@ -74,7 +84,7 @@ void pstr(stack_t **stack, unsigned int line_number)
 void rotl(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = *stack, *copy;
-	(void) line_number;
+	(void)line_number;
 
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
@@ -100,7 +110,7 @@ void rotl(stack_t **stack, unsigned int line_number)
 void rotr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *copy;
-	(void) line_number;
+	(void)line_number;
 
 	copy = *stack;
 	if (*stack == NULL || (*stack)->next == NULL)
