@@ -64,7 +64,7 @@ void pop_error(stack_t **stack, unsigned int line_number)
  */
 void div_by_zero_error(stack_t **stack, unsigned int line_number)
 {
-	fprintf(stderr, "L%d: can't div, stack too short\n", line_number);
+	fprintf(stderr, "L%d: division by zero\n", line_number);
 	fclose(info.file);
 	free(info.line);
 	free_stack(*stack);
